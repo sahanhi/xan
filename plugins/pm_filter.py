@@ -91,20 +91,20 @@ async def next_page(bot, query):
         off_set = offset - 10
     if n_offset == 0:
         btn.append(
-            [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-             InlineKeyboardButton(f"📃 Pages {round(int(offset) / 10) + 1} / {round(total / 10)}",
+            [InlineKeyboardButton("𝘽𝘼𝘾𝙆", callback_data=f"next_{req}_{key}_{off_set}"),
+             InlineKeyboardButton(f"𝙋𝘼𝙂𝙀 {round(int(offset) / 10) + 1} / {round(total / 10)}",
                                   callback_data="pages")]
         )
     elif off_set is None:
         btn.append(
-            [InlineKeyboardButton(f"🗓 {round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
-             InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")])
+            [InlineKeyboardButton(f"𝙋𝘼𝙂𝙀 {round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
+             InlineKeyboardButton("𝙉𝙀𝙓𝙏", callback_data=f"next_{req}_{key}_{n_offset}")])
     else:
         btn.append(
             [
-                InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-                InlineKeyboardButton(f"🗓 {round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
-                InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")
+                InlineKeyboardButton("𝘽𝘼𝘾𝙆", callback_data=f"next_{req}_{key}_{off_set}"),
+                InlineKeyboardButton(f"𝙋𝘼𝙂𝙀 {round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
+                InlineKeyboardButton("𝙉𝙀𝙓𝙏", callback_data=f"next_{req}_{key}_{n_offset}")
             ],
         )
     try:
@@ -373,7 +373,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
-            await query.answer("I Like Your Smartness, But Don't Be Oversmart 😒", show_alert=True)
+            await query.answer("I Like Your Smartness, But Don't Be Oversmart ", show_alert=True)
             return
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
@@ -404,51 +404,63 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer()
     elif query.data == "start":
         buttons = [[
-            InlineKeyboardButton('➕ Add Me To Your Groups ➕', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
-        ], [
-            InlineKeyboardButton('🔍 Search', switch_inline_query_current_chat=''),
-            InlineKeyboardButton('🤖 Updates', url='https://t.me/TeamEvamaria')
-        ], [
-            InlineKeyboardButton('ℹ️ Help', callback_data='help'),
-            InlineKeyboardButton('😊 About', callback_data='about')
+            InlineKeyboardButton('𝙃𝙀𝙇𝙋', callback_data='help'),
+            InlineKeyboardButton('𝘼𝘽𝙊𝙐𝙏', callback_data='about')
+        ],[
+           InlineKeyboardButton('🔍 𝙎𝙀𝘼𝙍𝘾𝙃 🔍', switch_inline_query_current_chat=''),
+           InlineKeyboardButton('➕ 𝘼𝘿𝘿 ➕', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
+        ],[
+            InlineKeyboardButton('𝘾𝙇𝙊𝙎𝙀', callback_data='close_data')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
             text=script.START_TXT.format(query.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='html',
+            disable_web_page_preview=True
         )
         await query.answer('Piracy Is Crime')
     elif query.data == "help":
         buttons = [[
-            InlineKeyboardButton('Manual Filter', callback_data='manuelfilter'),
-            InlineKeyboardButton('Auto Filter', callback_data='autofilter')
-        ], [
-            InlineKeyboardButton('Connection', callback_data='coct'),
-            InlineKeyboardButton('Extra Mods', callback_data='extra')
-        ], [
-            InlineKeyboardButton('🏠 Home', callback_data='start'),
-            InlineKeyboardButton('🔮 Status', callback_data='stats')
+            InlineKeyboardButton('𝙃𝙀𝙇𝙋', callback_data='help'),
+            InlineKeyboardButton('𝘼𝘽𝙊𝙐𝙏', callback_data='about')
+        ],[
+           InlineKeyboardButton('🔍 𝙎𝙀𝘼𝙍𝘾𝙃 🔍', switch_inline_query_current_chat=''),
+           InlineKeyboardButton('➕ 𝘼𝘿𝘿 ➕', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
+        ],[
+            InlineKeyboardButton('𝘾𝙇𝙊𝙎𝙀', callback_data='close_data')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
             text=script.HELP_TXT.format(query.from_user.mention),
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='html',
+            disable_web_page_preview=True
         )
     elif query.data == "about":
         buttons = [[
-            InlineKeyboardButton('🤖 Updates', url='https://t.me/TeamEvamaria'),
-            InlineKeyboardButton('♥️ Source', callback_data='source')
-        ], [
-            InlineKeyboardButton('🏠 Home', callback_data='start'),
-            InlineKeyboardButton('🔐 Close', callback_data='close_data')
-        ]]
+           InlineKeyboardButton('𝙃𝙊𝙈𝙀', callback_data='start'),
+           InlineKeyboardButton('𝙃𝙀𝙇𝙋', callback_data='help')
+           ],[
+           InlineKeyboardButton('🔍 𝙎𝙀𝘼𝙍𝘾𝙃 🔍', switch_inline_query_current_chat=''),
+           InlineKeyboardButton('➕ 𝘼𝘿𝘿 ➕', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
+           ],[
+           InlineKeyboardButton('𝘾𝙇𝙊𝙎𝙀', callback_data='close_data'),
+           InlineKeyboardButton('🔄', callback_data='rfrsh')
+           ]]
         reply_markup = InlineKeyboardMarkup(buttons)
+        total = await Media.count_documents()
+        users = await db.total_users_count()
+        chats = await db.total_chat_count()
+        monsize = await db.get_db_size()
+        free = 536870912 - monsize
+        monsize = get_size(monsize)
+        free = get_size(free)
         await query.message.edit_text(
-            text=script.ABOUT_TXT.format(temp.B_NAME),
+            text=script.ABOUT_TXT.format(total,users,chats),
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='html',
+            disable_web_page_preview=True
         )
     elif query.data == "source":
         buttons = [[
@@ -543,9 +555,15 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "rfrsh":
         await query.answer("Fetching MongoDb DataBase")
         buttons = [[
-            InlineKeyboardButton('👩‍🦯 Back', callback_data='help'),
-            InlineKeyboardButton('♻️', callback_data='rfrsh')
-        ]]
+           InlineKeyboardButton('𝙃𝙊𝙈𝙀', callback_data='start'),
+           InlineKeyboardButton('𝙃𝙀𝙇𝙋', callback_data='help')
+           ],[
+           InlineKeyboardButton('🔍 𝙎𝙀𝘼𝙍𝘾𝙃 🔍', switch_inline_query_current_chat=''),
+           InlineKeyboardButton('➕ 𝘼𝘿𝘿 ➕', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
+           ],[
+           InlineKeyboardButton('𝘾𝙇𝙊𝙎𝙀', callback_data='close_data'),
+           InlineKeyboardButton('🔄', callback_data='rfrsh')
+           ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         total = await Media.count_documents()
         users = await db.total_users_count()
@@ -555,9 +573,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
         monsize = get_size(monsize)
         free = get_size(free)
         await query.message.edit_text(
-            text=script.STATUS_TXT.format(total, users, chats, monsize, free),
+            text=script.ABOUT_TXT.format(total,users,chats),
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='html',
+            disable_web_page_preview=True
         )
     elif query.data.startswith("setgs"):
         ident, set_type, status, grp_id = query.data.split("#")
